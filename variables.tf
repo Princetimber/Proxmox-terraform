@@ -6,7 +6,7 @@ variable "local_vm_configs" {
       tags        = "prod, windows"
       target_node = "lab"
       vmid        = 8001
-      memory      = 8192
+      memory      = 4096
       cores       = 2
       sockets     = 2
       agent       = 1
@@ -17,6 +17,7 @@ variable "local_vm_configs" {
       cpu         = "x86-64-v2-AES"
       vcpus       = 4
       iso         = "local:iso/winserver2025.iso"
+      virtio_iso  = "local:iso/virtio-win.iso"
       onboot      = false
       oncreate    = false
       numa        = true
@@ -30,7 +31,7 @@ variable "local_vm_configs" {
       }
       disk = {
         type    = "scsi"
-        size    = "100G"
+        size    = "60G"
         storage = "local-zfs"
         discard = "on"
         ssd     = 1
@@ -41,7 +42,7 @@ variable "local_vm_configs" {
       tags        = "prod, windows"
       target_node = "lab"
       vmid        = 8002
-      memory      = 8192
+      memory      = 4096
       cores       = 2
       sockets     = 2
       agent       = 1
@@ -52,6 +53,7 @@ variable "local_vm_configs" {
       cpu         = "x86-64-v2-AES"
       vcpus       = 4
       iso         = "local:iso/winserver2025.iso"
+      virtio_iso  = "local:iso/virtio-win.iso"
       onboot      = false
       oncreate    = false
       numa        = true
@@ -64,7 +66,7 @@ variable "local_vm_configs" {
       }
       disk = {
         type    = "scsi"
-        size    = "60G"
+        size    = "40G"
         storage = "local-zfs"
         discard = "on"
         ssd     = 1
@@ -72,4 +74,3 @@ variable "local_vm_configs" {
     }
   ]
 }
-

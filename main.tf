@@ -33,4 +33,15 @@ resource "proxmox_vm_qemu" "vm_template" {
     discard = each.value.disk.discard
     ssd     = each.value.disk.ssd
   }
+
+  dynamic "disk" {
+    for_each = can(each.value.virtio_iso) ? [1] : []
+    content {
+      type    = "ide"
+      media   = "cdrom"
+      file    = each.value.virtio_iso
+      storage = each.value.disk.storage
+      size    = "1G" # Default size for a CD-ROM
+    }
+  }
 }
