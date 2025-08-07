@@ -44,4 +44,13 @@ resource "proxmox_vm_qemu" "vm_template" {
       size    = "1G" # Default size for a CD-ROM
     }
   }
+
+  dynamic "disk" {
+    for_each = each.value.bios == "ovmf" ? [1] : []
+    content {
+      type    = "efidisk"
+      storage = each.value.disk.storage
+      size    = "4M"
+    }
+  }
 }
