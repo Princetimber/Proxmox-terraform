@@ -1,6 +1,7 @@
 resource "proxmox_vm_qemu" "vm_template" {
-  for_each    = { for vm, vm_config in var.local_vm_configs : vm => vm_config }
+  for_each    = { for vm_config in var.local_vm_configs : vm_config.name => vm_config }
   name        = each.value.name
+  tags        = each.value.tags
   target_node = each.value.target_node
   vmid        = each.value.vmid
   memory      = each.value.memory
@@ -23,7 +24,7 @@ resource "proxmox_vm_qemu" "vm_template" {
   network {
     model  = each.value.network.model
     bridge = each.value.network.bridge
-
+    tag    = try(each.value.network.tag, -1)
   }
   disk {
     type    = each.value.disk.type

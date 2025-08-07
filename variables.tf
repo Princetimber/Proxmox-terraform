@@ -2,9 +2,9 @@ variable "local_vm_configs" {
   default = [
 
     {
-      name        = "prod-winserver-2022-gui"
+      name        = "svr-win-2025"
       tags        = "prod, windows"
-      target_node = "pve"
+      target_node = "lab"
       vmid        = 8001
       memory      = 8192
       cores       = 2
@@ -25,21 +25,21 @@ variable "local_vm_configs" {
       bootdisk    = "scsi0"
       network = {
         model  = "virtio"
-        bridge = "vmbr1"
+        bridge = "isovnet"
         tag    = 7
       }
       disk = {
         type    = "scsi"
         size    = "100G"
-        storage = "local-lvm"
+        storage = "local-zfs"
         discard = "on"
         ssd     = 1
       }
     },
     {
-      name        = "prod-winserver-2022-core"
+      name        = "svr-win-2025-core"
       tags        = "prod, windows"
-      target_node = "pve"
+      target_node = "lab"
       vmid        = 8002
       memory      = 8192
       cores       = 2
@@ -60,12 +60,12 @@ variable "local_vm_configs" {
       bootdisk    = "scsi0"
       network = {
         model  = "virtio"
-        bridge = "vmbr1"
+        bridge = "isovnet"
       }
       disk = {
         type    = "scsi"
         size    = "60G"
-        storage = "local-lvm"
+        storage = "local-zfs"
         discard = "on"
         ssd     = 1
       }
