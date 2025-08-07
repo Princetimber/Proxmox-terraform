@@ -16,7 +16,7 @@ variable "local_vm_configs" {
       qemu_os     = "win11"
       cpu         = "x86-64-v2-AES"
       vcpus       = 4
-      iso         = "local:iso/winserver2022.iso"
+      iso         = "local:iso/winserver2025.iso"
       onboot      = false
       oncreate    = false
       numa        = true
@@ -51,7 +51,7 @@ variable "local_vm_configs" {
       qemu_os     = "win11"
       cpu         = "x86-64-v2-AES"
       vcpus       = 4
-      iso         = "local:iso/winserver2022.iso"
+      iso         = "local:iso/winserver2025.iso"
       onboot      = false
       oncreate    = false
       numa        = true
