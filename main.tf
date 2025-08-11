@@ -5,7 +5,6 @@ resource "proxmox_virtual_environment_vm" "vm_template" {
   tags        = split(",", each.value.tags)
   node_name   = each.value.target_node
   vm_id       = each.value.vmid
-  on_boot     = each.value.onboot
 
   cpu {
     cores   = each.value.cores
@@ -35,28 +34,32 @@ resource "proxmox_virtual_environment_vm" "vm_template" {
 
   disk {
     datastore_id = each.value.disk.storage
-    file_format  = "raw" # Assuming raw, as type was 'scsi'
+    file_format  = "raw"
     interface    = "scsi0"
     size         = each.value.disk.size
     ssd          = each.value.disk.ssd == 1
   }
 
-  disk {
-    datastore_id = each.value.disk.storage
-    file_format  = "raw"
-    interface    = "efidisk0"
-    size         = 4
-  }
-
+  # Attach OS install ISO
   cdrom {
     file_id = each.value.iso
   }
 
-  disk {
-    datastore_id      = "local" # ISOs are usually on 'local' storage
-    file_format       = "raw"
-    interface         = "ide3"
-    path_in_datastore = each.value.virtio_iso
-    size              = 1 # Size is required but ignored for ISOs
+  # Attach EFI disk for UEFI compliance
+  efi_disk {
+    datastore_id = each.value.disk.storage
+    file_format  = "raw"
+  }
+
+  # Attach TPM state for Windows 11 compliance
+  tpm_state {
+    datastore_id = each.value.disk.storage
+    version      = "v2.0"
+  }
+
+  started = false
+
+  startup {
+    order = 1
   }
 }
